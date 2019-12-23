@@ -39,7 +39,7 @@ object SortDemo {
         val mid: Int = (start + end) / 2
         
         mergeSort(arr, start, mid) // 把数组拆成两部分  左
-        mergeSort(arr, mid + 1, end) // 右
+        mergeSort(arr, mid +1, end) // 右
         
         merge1(arr, start, mid, end)
     }
@@ -47,7 +47,7 @@ object SortDemo {
     // 增加哨兵的合并
     def merge1(arr: Array[Int], start: Int, mid: Int, end: Int): Unit = {
         // 增加一个最大值左为"哨兵"
-        val left: Array[Int] = arr.slice(start, mid + 1) :+ Int.MaxValue
+        val left: Array[Int] = arr.slice(start, mid + 1 ) :+ Int.MaxValue
         val right: Array[Int] = arr.slice(mid + 1, end + 1) :+ Int.MaxValue
         
         var m = 0 // left的索引
@@ -64,8 +64,8 @@ object SortDemo {
     }
     // 原来的合并
     def merge(arr: Array[Int], start: Int, mid: Int, end: Int): Unit = {
-        val left: Array[Int] = arr.slice(start, mid)
-        val right: Array[Int] = arr.slice(mid, end + 1)
+        val left: Array[Int] = arr.slice(start, mid + 1)
+        val right: Array[Int] = arr.slice(mid + 1, end + 1)
         
         var m = 0 // left的索引
         var n = 0 // right的索引
