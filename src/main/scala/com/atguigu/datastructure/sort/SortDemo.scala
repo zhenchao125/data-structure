@@ -16,15 +16,16 @@ object SortDemo {
     }
     
     def main(args: Array[String]): Unit = {
-                val arr1 = randomArr(100000)
+//                val arr1 = randomArr(100000)
 //        val arr1 = Array(40, 20, 30, -2, 100, 20, Int.MaxValue,Int.MinValue)
+        val arr1 = Array(10,20,90,3,55,69,23,20)
         //        swap(arr1, 0, 1)
         val start = System.currentTimeMillis()
         //        quickSort(arr1, 0, arr1.length - 1)
         mergeSort(arr1, 0, arr1.length - 1)
         //        BubbleSort(arr1)
         println((System.currentTimeMillis() - start).toDouble / 1000)
-//        println(arr1.mkString(","))
+        println(arr1.mkString(","))
         
 //        println(quick(arr1.toList).mkString(", "))
         
@@ -46,8 +47,8 @@ object SortDemo {
     // 增加哨兵的合并
     def merge1(arr: Array[Int], start: Int, mid: Int, end: Int): Unit = {
         // 增加一个最大值左为"哨兵"
-        val left: Array[Int] = arr.slice(start, mid) :+ Int.MaxValue
-        val right: Array[Int] = arr.slice(mid, end + 1) :+ Int.MaxValue
+        val left: Array[Int] = arr.slice(start, mid + 1) :+ Int.MaxValue
+        val right: Array[Int] = arr.slice(mid + 1, end + 1) :+ Int.MaxValue
         
         var m = 0 // left的索引
         var n = 0 // right的索引

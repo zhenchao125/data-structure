@@ -17,8 +17,6 @@ object HashDemo {
         table.add(30)
         table.add(31)
         table.printInfo
-        
-        
     }
 }
 
