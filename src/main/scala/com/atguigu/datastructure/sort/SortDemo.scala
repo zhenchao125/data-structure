@@ -9,23 +9,100 @@ import scala.util.Random
 object SortDemo {
     def randomArr(num: Int) = {
         val arr = new Array[Int](num)
-        for (i <- 0 until  num) {
+        for (i <- 0 until num) {
             arr(i) = new Random().nextInt(100000000)
         }
         arr
     }
+    
     def main(args: Array[String]): Unit = {
-//        val arr1 = randomArr(100000)
-        val arr1 = Array(40, 20, 30, -2)
-//        swap(arr1, 0, 1)
+                val arr1 = randomArr(100000)
+//        val arr1 = Array(40, 20, 30, -2, 100, 20, Int.MaxValue,Int.MinValue)
+        //        swap(arr1, 0, 1)
         val start = System.currentTimeMillis()
-        quickSort(arr1, 0, arr1.length - 1)
-//        BubbleSort(arr1)
+        //        quickSort(arr1, 0, arr1.length - 1)
+        mergeSort(arr1, 0, arr1.length - 1)
+        //        BubbleSort(arr1)
         println((System.currentTimeMillis() - start).toDouble / 1000)
-        println(arr1.mkString(","))
+//        println(arr1.mkString(","))
+        
+//        println(quick(arr1.toList).mkString(", "))
+        
     }
     
     
+    // 归并排序
+    
+    def mergeSort(arr: Array[Int], start: Int, end: Int): Unit = {
+        if (start >= end) return
+        val mid: Int = (start + end) / 2
+        
+        mergeSort(arr, start, mid) // 把数组拆成两部分  左
+        mergeSort(arr, mid + 1, end) // 右
+        
+        merge1(arr, start, mid, end)
+    }
+    
+    // 增加哨兵的合并
+    def merge1(arr: Array[Int], start: Int, mid: Int, end: Int): Unit = {
+        // 增加一个最大值左为"哨兵"
+        val left: Array[Int] = arr.slice(start, mid) :+ Int.MaxValue
+        val right: Array[Int] = arr.slice(mid, end + 1) :+ Int.MaxValue
+        
+        var m = 0 // left的索引
+        var n = 0 // right的索引
+        for (i <- start to end) {
+            if (left(m) < right(n)) {
+                arr(i) = left(m)
+                m += 1
+            } else {
+                arr(i) = right(n)
+                n += 1
+            }
+        }
+    }
+    // 原来的合并
+    def merge(arr: Array[Int], start: Int, mid: Int, end: Int): Unit = {
+        val left: Array[Int] = arr.slice(start, mid)
+        val right: Array[Int] = arr.slice(mid, end + 1)
+        
+        var m = 0 // left的索引
+        var n = 0 // right的索引
+        for (i <- start to end) {
+            if (m > left.length - 1) {
+                arr(i) = right(n)
+                n += 1
+            } else if (n > right.length - 1) {
+                arr(i) = left(m)
+                m += 1
+                
+            } else if (left(m) <= right(n)) {
+                arr(i) = left(m)
+                m += 1
+            } else if (left(m) > right(n)) {
+                arr(i) = right(n)
+                n += 1
+            }
+        }
+    }
+    
+    
+    /*// 返回一个有序的数组
+    def quick(arr: Array[Int]):Array[Int] = {
+        arr match {
+            case Array(a, rest@_*) =>
+                (quick(rest.filter( _ <= a).toArray) :+ a) ++  quick(rest.filter( _ > a).toArray)
+            case _ => Array[Int]()
+        }
+    }*/
+    
+    def quick(list: List[Int]): List[Int] = {
+        list match {
+            case Nil => Nil
+            case ::(head, tail) =>
+                quick(tail.filter(_ <= head)) ::: head :: quick(tail.filter(_ > head))
+        }
+    }
     
     
     // 对数组原地排序
@@ -54,7 +131,6 @@ object SortDemo {
     def quickPartition(arr: Array[Int], left: Int, right: Int): Int = {
         var low: Int = left
         var high: Int = right
-        
         val p: Int = arr(left)
         
         while (low < high) {
@@ -86,7 +162,6 @@ object SortDemo {
         arr(a) = arr(b)
         arr(b) = tmp
     }
-    
     
     
     def BubbleSort(arr: Array[Int]): Unit = {
