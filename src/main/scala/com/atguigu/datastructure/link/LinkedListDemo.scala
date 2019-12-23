@@ -1,7 +1,7 @@
 package com.atguigu.datastructure.link
 
 
-object LinkedListDemo {
+object DoublyLinkedListDemo {
     def main(args: Array[String]): Unit = {
         val linkedList = new DoublyLinkedList[Int]
         linkedList.add(10)
@@ -62,6 +62,7 @@ class DoublyLinkedList[T: Ordering] {
             case Some(node) =>
                 if (node == head) {
                     head = node.next
+                    head.pre = null
                 } else if (node == tail) {
                     tail = node.pre
                     tail.next = null
@@ -76,7 +77,6 @@ class DoublyLinkedList[T: Ordering] {
                 true
             case None => false
         }
-        
     }
     
     /**
